@@ -3,6 +3,8 @@ import librosa
 import numpy as np
 from scipy.signal import butter, lfilter, fftconvolve
 
+PROCESSING_SAMPLE_RATE = 22050
+
 # ---------- Basic DSP helpers ----------
 
 def _fade_in_out(y, sr, fade_seconds=1.0):
@@ -378,24 +380,22 @@ def _fast_reverb(y, sr, amount=0.0):
 
     def _comb_filter(x, delay_samples, feedback):
         """IIR comb: y[n] = x[n] + feedback * y[n - delay]"""
-        out = np.zeros(len(x), dtype=np.float64)
         d = int(delay_samples)
-        for i in range(len(x)):
-            out[i] = x[i]
-            if i >= d:
-                out[i] += feedback * out[i - d]
-        return out
+        coefficients = np.zeros(d + 1, dtype=np.float64)
+        coefficients[0] = 1.0
+        coefficients[d] = -feedback
+        return lfilter([1.0], coefficients, x.astype(np.float64))
 
     def _allpass_filter(x, delay_samples, gain):
         """Schroeder all-pass: y[n] = -g*x[n] + x[n-d] + g*y[n-d]"""
-        out = np.zeros(len(x), dtype=np.float64)
         d = int(delay_samples)
-        g = gain
-        for i in range(len(x)):
-            x_delayed = x[i - d] if i >= d else 0.0
-            y_delayed = out[i - d] if i >= d else 0.0
-            out[i] = -g * x[i] + x_delayed + g * y_delayed
-        return out
+        numerator = np.zeros(d + 1, dtype=np.float64)
+        denominator = np.zeros(d + 1, dtype=np.float64)
+        numerator[0] = -gain
+        numerator[d] = 1.0
+        denominator[0] = 1.0
+        denominator[d] = -gain
+        return lfilter(numerator, denominator, x)
 
     # Scale feedback by amount (more amount = longer tail)
     comb_sum = np.zeros(n, dtype=np.float64)
@@ -584,7 +584,9 @@ def remix_audio(
     except Exception:
         pass
 
-    y, sr = librosa.load(file, sr=None, mono=True)
+    # 22.05 kHz preserves the lo-fi character while keeping full-track
+    # renders within the CPU and memory limits of small Render instances.
+    y, sr = librosa.load(file, sr=PROCESSING_SAMPLE_RATE, mono=True)
 
     # Optional segment crop BEFORE any processing (for fast preview)
     if duration is not None and duration > 0:

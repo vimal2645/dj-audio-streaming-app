@@ -5,17 +5,13 @@ import threading
 
 from bgm_core.jobs import run_remix_job
 
-
-@st.cache_resource
-def get_render_lock():
-    """Allow only one CPU-heavy audio render per app instance."""
-    return threading.Lock()
+render_lock = threading.Lock()
 
 
 def render_remix(audio_file, track_2_file, **options):
     audio_bytes = audio_file.getvalue()
     track_2_bytes = track_2_file.getvalue() if track_2_file is not None else None
-    with get_render_lock():
+    with render_lock:
         return run_remix_job(audio_bytes, track_2_bytes, options)
 
 
