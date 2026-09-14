@@ -2,48 +2,21 @@ import streamlit as st
 import soundfile as sf
 import io
 import threading
-from concurrent.futures import Future
-from queue import Queue
 
 from bgm_core.jobs import run_remix_job
 
 
-class RenderQueue:
-    def __init__(self, max_waiting=2):
-        self.jobs = Queue(maxsize=max_waiting)
-        self.worker = threading.Thread(target=self._worker_loop, daemon=True)
-        self.worker.start()
-
-    def _worker_loop(self):
-        while True:
-            future, audio_bytes, track_2_bytes, options = self.jobs.get()
-            try:
-                result = run_remix_job(audio_bytes, track_2_bytes, options)
-                future.set_result(result)
-            except BaseException as error:
-                future.set_exception(error)
-            finally:
-                self.jobs.task_done()
-
-    def submit(self, audio_bytes, track_2_bytes, options):
-        future = Future()
-        self.jobs.put((future, audio_bytes, track_2_bytes, options))
-        return future
-
-
 @st.cache_resource
-def get_render_queue():
-    return RenderQueue(max_waiting=2)
+def get_render_lock():
+    """Allow only one CPU-heavy audio render per app instance."""
+    return threading.Lock()
 
 
 def render_remix(audio_file, track_2_file, **options):
     audio_bytes = audio_file.getvalue()
     track_2_bytes = track_2_file.getvalue() if track_2_file is not None else None
-    return get_render_queue().submit(
-        audio_bytes,
-        track_2_bytes,
-        options,
-    ).result()
+    with get_render_lock():
+        return run_remix_job(audio_bytes, track_2_bytes, options)
 
 
 # ================== PAGE CONFIG ==================
