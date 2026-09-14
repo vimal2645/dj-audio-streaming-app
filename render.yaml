@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: whz-looproom
+    env: python
+    buildCommand: apt-get update && apt-get install -y ffmpeg libsndfile1 && pip install -r requirements.txt
+    startCommand: streamlit run app.py --server.address 0.0.0.0 --server.port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
