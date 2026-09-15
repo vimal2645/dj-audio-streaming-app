@@ -199,6 +199,132 @@ audio {
     letter-spacing: 0.14em;
 }
 
+/* Testing Phase Pill & Pulse */
+.testing-pill {
+    background: rgba(245, 158, 11, 0.15) !important;
+    border: 1px solid rgba(245, 158, 11, 0.7) !important;
+    color: #fbbf24 !important;
+    font-weight: 700 !important;
+}
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fbbf24;
+    box-shadow: 0 0 8px #fbbf24;
+    animation: pulseAnim 1.6s infinite ease-in-out;
+    display: inline-block;
+}
+@keyframes pulseAnim {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.8); }
+}
+
+/* Status Banner */
+.status-banner {
+    margin-top: 0.8rem;
+    padding: 0.6rem 0.95rem;
+    border-radius: 12px;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px dashed rgba(245, 158, 11, 0.45);
+    color: #fef3c7;
+    font-size: 0.83rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+/* Footer Styling (by VPIXCEL) */
+.custom-footer {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.6rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.75));
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow: 0 16px 36px rgba(2, 6, 23, 0.7);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+}
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+}
+.footer-brand {
+    font-weight: 800;
+    color: #f8fafc;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+}
+.footer-by {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+.footer-by strong {
+    color: #38bdf8;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+.footer-tag {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    color: #fbbf24;
+    font-weight: 700;
+}
+.footer-links {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+.footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out;
+}
+.insta-link {
+    background: linear-gradient(135deg, rgba(225, 48, 108, 0.15), rgba(253, 29, 29, 0.15));
+    border: 1px solid rgba(225, 48, 108, 0.45);
+    color: #f472b6 !important;
+}
+.insta-link:hover {
+    background: linear-gradient(135deg, rgba(225, 48, 108, 0.35), rgba(253, 29, 29, 0.35));
+    border-color: rgba(225, 48, 108, 0.9);
+    box-shadow: 0 0 16px rgba(225, 48, 108, 0.45);
+    transform: translateY(-2px);
+    color: #ffffff !important;
+}
+.mail-link {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #38bdf8 !important;
+}
+.mail-link:hover {
+    background: rgba(56, 189, 248, 0.28);
+    border-color: rgba(56, 189, 248, 0.85);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+    transform: translateY(-2px);
+    color: #ffffff !important;
+}
+
 /* Fade-in animation */
 @keyframes cardFadeIn {
     from { opacity: 0; transform: translateY(6px);}
@@ -217,8 +343,13 @@ st.markdown(
   <div class="app-subtitle">
     Three‑section remix tool to turn any track into smooth background music with fine control.
   </div>
-  <div style="margin-top:0.6rem;">
+  <div style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
     <span class="tag-pill">🎧 Remix existing song</span>
+    <span class="tag-pill testing-pill"><span class="pulse-dot"></span> In Testing Phase</span>
+  </div>
+  <div class="status-banner">
+    <span>🧪</span>
+    <span><strong>Testing Phase Active:</strong> Cloud-optimized with <strong>30-Sec Reel Cutter</strong> for fast rendering and stability on Render Free Tier.</span>
   </div>
 </div>
 """,
@@ -242,8 +373,8 @@ default_states = {
     "sub_woofer": 0.0,
     "bitcrush_amount": 0.0,
     "audio_8d_amount": 0.0,
-    "t1": 30.0,
-    "t2": 60.0,
+    "t1": 10.0,
+    "t2": 20.0,
     "bass1": 20, "high1": 20, "reverb1": 20, "lofi1": 0,
     "bass2": 60, "high2": 40, "reverb2": 30, "lofi2": 10,
     "bass3": 35, "high3": 20, "reverb3": 40, "lofi3": 40,
@@ -254,6 +385,7 @@ default_states = {
     "return_to_track_1": False,
     "track_2_out_point": 60.0,
     "track_1_resume_point": 120.0,
+    "reel_start": 0.0,
     "preview_start": 0.0
 }
 for key, val in default_states.items():
@@ -289,7 +421,7 @@ with tab1:
 1. **Upload**: Go to the 🎵 Main Track tab and upload your base song.
 2. **Vibe Check**: Click a ✨ Magic Preset below, or manually tweak the Tape, Vinyl, and 8D sliders.
 3. **Mashup (Optional)**: Go to 🎧 DJ Mashup to layer a second song, sync the BPM, and trigger a beat drop.
-4. **Export**: Hit the Preview or Generate buttons permanently pinned to your screen to hear the magic.
+4. **30s Reel Export**: Set your start point and hit **✂️ Generate 30-Sec Reel** to render an Instagram / TikTok ready 30s cut with all effects applied!
         """)
 
     st.markdown("### Magic Presets")
@@ -380,16 +512,29 @@ st.write("")
 
 export_container = st.container()
 with export_container:
-    st.markdown("### Preview & Export")
-    preview_start = st.number_input(
-        "Preview start time (sec)", min_value=0.0, key="preview_start", step=1.0
-    )
+    st.markdown("### 🎬 30-Sec Reel Cutter & Export")
+    st.caption("⚡ **Cloud-Optimized (Free Tier):** Generates a high-quality 30-second reel clip for Instagram, TikTok, and Shorts without cloud memory limit crashes.")
+
+    col_exp1, col_exp2 = st.columns([3, 1])
+    with col_exp1:
+        reel_start = st.number_input(
+            "Reel Start Time (seconds)",
+            min_value=0.0,
+            value=float(st.session_state.get("reel_start", 0.0)),
+            key="reel_start_input",
+            step=1.0,
+            help="Choose the start timestamp for your 30-second reel cut",
+        )
+        st.session_state["reel_start"] = reel_start
+        st.session_state["preview_start"] = reel_start
+    with col_exp2:
+        st.metric(label="Reel Duration", value="30.0 s", delta="Cloud Safe")
 
     col_btn1, col_btn2 = st.columns(2)
     with col_btn1:
-        preview_click = st.button("▶ Preview 15s Segment", use_container_width=True)
+        preview_click = st.button("▶ Quick 15s Preview", use_container_width=True)
     with col_btn2:
-        full_click = st.button("💾 Process Remix (Full Track)", use_container_width=True)
+        reel_click = st.button("✂️ Generate 30-Sec Reel", use_container_width=True, type="primary")
 
 
 # ================== PREVIEW LOGIC ==================
@@ -416,7 +561,7 @@ if audio_file is not None and preview_click:
             high3=high3,
             reverb3=reverb3,
             lofi3=lofi3,
-            start_time=preview_start,
+            start_time=st.session_state["reel_start"],
             duration=15.0,
             wow_flutter_amount=wow_flutter,
             crackle_amount=crackle,
@@ -445,13 +590,14 @@ if audio_file is not None and preview_click:
 # Always render preview player if a buffer exists
 if "preview_buf" in st.session_state:
     with export_container:
+        st.markdown("**▶ 15s Preview Player**")
         st.audio(st.session_state["preview_buf"], format="audio/wav")
 
 
-# ================== FULL REMIX LOGIC ==================
-if audio_file is not None and full_click:
-    with st.spinner("Processing full remix..."):
-        y_out, sr_out = render_remix(
+# ================== 30-SEC REEL REMIX LOGIC ==================
+if audio_file is not None and reel_click:
+    with st.spinner("Processing 30-second reel remix..."):
+        y_reel, sr_reel = render_remix(
             audio_file,
             track_2_file,
             speed=speed,
@@ -472,8 +618,8 @@ if audio_file is not None and full_click:
             high3=high3,
             reverb3=reverb3,
             lofi3=lofi3,
-            start_time=0.0,
-            duration=None,
+            start_time=st.session_state["reel_start"],
+            duration=30.0,
             wow_flutter_amount=wow_flutter,
             crackle_amount=crackle,
             use_fast_reverb=use_fast_reverb,
@@ -492,19 +638,52 @@ if audio_file is not None and full_click:
             track_1_resume_point=track_1_resume_point,
         )
 
-    buf = io.BytesIO()
-    sf.write(buf, y_out, sr_out, format="wav")
-    buf.seek(0)
+    buf_reel = io.BytesIO()
+    sf.write(buf_reel, y_reel, sr_reel, format="wav")
+    buf_reel.seek(0)
     # Persist in session_state so it survives reruns
-    st.session_state["full_buf"] = buf.getvalue()
+    st.session_state["reel_buf"] = buf_reel.getvalue()
 
-# Always render full remix player + download if a buffer exists
-if "full_buf" in st.session_state:
+# Always render 30s reel player + download if a buffer exists
+if "reel_buf" in st.session_state:
     with export_container:
-        st.audio(st.session_state["full_buf"], format="audio/wav")
+        st.success("✅ 30-Second Reel Remix Ready!")
+        st.audio(st.session_state["reel_buf"], format="audio/wav")
         st.download_button(
-            "Download Remixed BGM",
-            st.session_state["full_buf"],
-            file_name="remixed_bgm.wav",
+            "📥 Download 30-Sec Reel (WAV)",
+            st.session_state["reel_buf"],
+            file_name="remix_30s_reel.wav",
             mime="audio/wav",
         )
+
+
+# ================== FOOTER (by VPIXCEL) ==================
+footer_html = """
+<div class="custom-footer">
+  <div class="footer-content">
+    <div class="footer-left">
+      <span class="footer-brand">🎧 WHZ LoopRoom</span>
+      <span class="footer-by">by <strong>VPIXCEL</strong></span>
+      <span class="footer-tag">🧪 In Testing Phase</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://instagram.com/VPIXCEL" target="_blank" rel="noopener noreferrer" class="footer-link insta-link">
+        <svg class="footer-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>@VPIXCEL</span>
+      </a>
+      <a href="mailto:vpixel.builds@gmail.com" class="footer-link mail-link">
+        <svg class="footer-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        <span>vpixel.builds@gmail.com</span>
+      </a>
+    </div>
+  </div>
+</div>
+"""
+st.markdown(footer_html, unsafe_allow_html=True)
